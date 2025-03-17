@@ -403,9 +403,9 @@ public class model {
             attributes.put("style", "rounded,filled");
             attributes.put("fillcolor", NODE_COLOR);
             if (this.is_trunk) {
-                attributes["fillcolor"] = TRUNK_COLOR;
+                attributes.put("fillcolor", TRUNK_COLOR);
             } else if (this.is_leaf) {
-                attributes["fillcolor"] =  LEAF_COLOR;
+                attributes.put("fillcolor", LEAF_COLOR);
             }
             StringBuilder sb = new StringBuilder();
             sb.append(this.uid).append(" [");

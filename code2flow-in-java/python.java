@@ -579,4 +579,5 @@ class SeparateNamespacesResult {
         this.nodes = nodes;
         this.body = body;
     }
+    
 }
