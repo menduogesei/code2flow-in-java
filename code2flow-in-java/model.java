@@ -90,6 +90,21 @@ public class model {
         return ret;
     }
 
+    public static byte[] getRandomBytes(int numBytes) {
+        SecureRandom random = new SecureRandom();
+        byte[] b = new byte[numBytes];
+        random.nextBytes(b);
+        return b;
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+
     public interface TokenHolder {
         String getToken();
         Integer getLineNumber();
@@ -248,24 +263,9 @@ public class model {
             this.parent = parent;
             this.is_constructor = is_constructor;
 
-            this.uid = "node_" + this.bytesToHex(this.getRandomBytes(4));
+            this.uid = "node_" + bytesToHex(getRandomBytes(4));
             this.is_leaf = true;
             this.is_trunk = true;
-        }
-
-        private byte[] getRandomBytes(int numBytes) {
-            SecureRandom random = new SecureRandom();
-            byte[] b = new byte[numBytes];
-            random.nextBytes(b);
-            return b;
-        }
-
-        private String bytesToHex(byte[] bytes) {
-            StringBuilder sb = new StringBuilder();
-            for (byte b : bytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
         }
 
         @Override
@@ -347,9 +347,7 @@ public class model {
             if (line_number == null) {
                 ret = new ArrayList<>(this.variables);
             } else {
-                ret = this.variables.stream()
-                        .filter(v -> v.line_number != null && v.line_number <= line_number)
-                        .collect(Collectors.toList());
+                ret = this.variables.stream().filter(v -> v.line_number != null && v.line_number <= line_number).collect(Collectors.toList());
             }
             boolean anyLine = ret.stream().anyMatch(v -> v.line_number != null);
             if (anyLine) {
@@ -376,7 +374,7 @@ public class model {
         public void resolve_variables(List<Group> file_groups) {
             for (Variable variable : this.variables) {
                 if (variable.points_to instanceof String) {
-                    variable.points_to = Util._resolve_str_variable(variable, file_groups);
+                    variable.points_to = _resolve_str_variable(variable, file_groups);
                 } else if (variable.points_to instanceof Call) {
                     Call call = (Call) variable.points_to;
                     if (call.is_attr() && !call.definite_constructor) {
@@ -405,9 +403,9 @@ public class model {
             attributes.put("style", "rounded,filled");
             attributes.put("fillcolor", NODE_COLOR);
             if (this.is_trunk) {
-                attributes.put("fillcolor", TRUNK_COLOR);
+                attributes["fillcolor"] = TRUNK_COLOR;
             } else if (this.is_leaf) {
-                attributes.put("fillcolor", LEAF_COLOR);
+                attributes["fillcolor"] =  LEAF_COLOR;
             }
             StringBuilder sb = new StringBuilder();
             sb.append(this.uid).append(" [");
@@ -418,8 +416,8 @@ public class model {
             return sb.toString();
         }
 
-        public Map<String, Object> to_dict() {
-            Map<String, Object> ret = new HashMap<>();
+        public Map<String, String> to_dict() {
+            Map<String, String> ret = new HashMap<>();
             ret.put("uid", this.uid);
             ret.put("label", this.label());
             ret.put("name", this.name());
@@ -445,8 +443,8 @@ public class model {
             this.node0 = node0;
             this.node1 = node1;
 
-            node0.is_leaf = false;
-            node1.is_trunk = false;
+            this.node0.is_leaf = false;
+            this.node1.is_trunk = false;
         }
 
         @Override
@@ -518,21 +516,6 @@ public class model {
             this.uid = "cluster_" + bytesToHex(getRandomBytes(4));
         }
 
-        private byte[] getRandomBytes(int numBytes) {
-            SecureRandom random = new SecureRandom();
-            byte[] b = new byte[numBytes];
-            random.nextBytes(b);
-            return b;
-        }
-
-        private String bytesToHex(byte[] bytes) {
-            StringBuilder sb = new StringBuilder();
-            for (byte b : bytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        }
-
         @Override
         public String toString() {
             return "<Group token=" + this.token + " type=" + this.display_type + ">";
@@ -573,11 +556,9 @@ public class model {
         }
 
         public Node get_constructor() {
-            if (!this.group_type.equals(GROUP_TYPE.CLASS_))
+            if (!this.group_type.equals(GROUP_TYPE.CLASS))
                 throw new AssertionError("group_type must be CLASS");
-            List<Node> constructors = this.nodes.stream()
-                    .filter(n -> n.is_constructor)
-                    .collect(Collectors.toList());
+            List<Node> constructors = this.nodes.stream().filter(n -> n.is_constructor).collect(Collectors.toList());
             if (!constructors.isEmpty()) {
                 return constructors.get(0);
             }
@@ -597,12 +578,10 @@ public class model {
             if (this.root_node != null) {
                 List<Variable> variables = new ArrayList<>();
                 variables.addAll(this.root_node.variables);
-                variables.addAll(Util._wrap_as_variables(this.subgroups));
+                variables.addAll(_wrap_as_variables(this.subgroups));
 
-                List<Object> nonRootNodes = this.nodes.stream()
-                        .filter(n -> n != this.root_node)
-                        .collect(Collectors.toList());
-                variables.addAll(Util._wrap_as_variables(nonRootNodes));
+                List<Node> nonRootNodes = this.nodes.stream().filter(n -> n != this.root_node).collect(Collectors.toList());
+                variables.addAll(_wrap_as_variables(nonRootNodes));
                 boolean anyLine = variables.stream().anyMatch(v -> v.line_number != null);
                 if (anyLine) {
                     variables.sort((v1, v2) -> {
@@ -618,9 +597,7 @@ public class model {
 
         public void remove_from_parent() {
             if (this.parent != null) {
-                this.parent.subgroups = this.parent.subgroups.stream()
-                        .filter(g -> g != this)
-                        .collect(Collectors.toList());
+                this.parent.subgroups = this.parent.subgroups.stream().filter(g -> g != this).collect(Collectors.toList());
             }
         }
 
@@ -653,9 +630,7 @@ public class model {
             for (Group subgroup : this.subgroups) {
                 String subDot = subgroup.to_dot();
 
-                String indented = Arrays.stream(subDot.split("\n"))
-                        .map(line -> "    " + line)
-                        .collect(Collectors.joining("\n"));
+                String indented = Arrays.stream(subDot.split("\n")).map(line -> "    " + line).collect(Collectors.joining("\n"));
                 sb.append(indented).append("\n");
             }
             sb.append("};\n");
@@ -671,16 +646,5 @@ public class model {
         public Integer getLineNumber() {
             return this.line_number;
         }
-    }
-    
-    public static void main(String[] args) throws IOException {
-        System.out.println("is_installed('java'): " + Util.is_installed("java"));
-        
-        System.out.println("djoin('a','b','c'): " + Util.djoin("a", "b", "c"));
-        
-        List<List<Integer>> listOfLists = new ArrayList<>();
-        listOfLists.add(Arrays.asList(1, 2, 3));
-        listOfLists.add(Arrays.asList(4, 5));
-        System.out.println("Flattened list: " + Util.flatten(listOfLists));
     }
 }
