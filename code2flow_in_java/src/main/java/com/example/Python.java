@@ -12,11 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.example.Model.Group;
-import com.example.Model.Node;
-import com.example.Model.Call;
-import com.example.Model.Variable;
-
 class NamespaceSeparation {
     public List<Object> groups;
     public List<Object> nodes;

@@ -15,11 +15,6 @@ import java.nio.file.Path;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-import com.example.Model.Group;
-import com.example.Model.Node;
-import com.example.Model.Call;
-import com.example.Model.Variable;
-
 public class Javascript {
     private static final Logger logging = Logger.getLogger("Javascript");
 

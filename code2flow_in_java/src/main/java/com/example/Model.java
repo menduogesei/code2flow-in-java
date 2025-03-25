@@ -106,21 +106,8 @@ public class Model {
         String getToken();
         Integer getLineNumber();
     }
-
-
-
-    public static class Main{
-        public static void main(String[] args){
-            system.out.println("1");
-        }
-    }
-
-
-
-
-
-
 }
+
 class Call {
     public String token;
     public Integer line_number;
@@ -236,7 +223,8 @@ class Variable {
         return this.token + "->" + this.points_to;
     }
 }
-  class Node implements Model.TokenHolder, Comparable<Node> {
+
+class Node implements Model.TokenHolder, Comparable<Node> {
     public String token;
     public Integer line_number;
     public List<Call> calls;
@@ -436,6 +424,7 @@ class Variable {
         return line_number;
     }
 }
+
 class Edge implements Comparable<Edge> {
     public Node node0;
     public Node node1;
@@ -482,6 +471,7 @@ class Edge implements Comparable<Edge> {
         return ret;
     }
 }
+
 class Group implements Model.TokenHolder {
     public String token;
     public String group_type;
@@ -656,4 +646,3 @@ class Group implements Model.TokenHolder {
         return this.line_number;
     }
 }
-
