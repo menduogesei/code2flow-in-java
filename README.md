@@ -26,8 +26,6 @@ Code2flow是一款基于静态分析的代码可视化工具，其核心能力�
 如果你没有下载Ruby解析依赖，你能在[这里](https://github.com/whitequark/parser)找到下载方法。
 ### PHP-Parser
 如果你没有下载PHP解析依赖，你能在[这里](https://github.com/nikic/PHP-Parser)找到下载方法。
-## 下载
-在开发中......开发完成后直接提供jar包下载。
 ## 用法
 以JavaScript为例，
 为了生成一个DOT文件，运行以下命令：
