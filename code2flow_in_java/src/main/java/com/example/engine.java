@@ -1027,7 +1027,7 @@ public class engine {
 class LanguageParams {
     public final String sourceType;
     public final String rubyVersion;
-
+    public String ruby_version;
     public LanguageParams() {
         this("script", "27");
     }
