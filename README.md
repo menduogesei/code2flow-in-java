@@ -285,7 +285,56 @@ subgraph cluster_55bf0f76 {
   
   
 ###将原code2flow的model.py转化为了函数调用关系图  
-![model.py](img/model_py.png)
+![model.py](img/model_py.png)  
+
+## PHP代码生成函数调用关系图
+### PHP代码案例1
+```
+
+```
+### 转化为dot文件
+```
+```
+### 生成的函数调用关系图  
+![php代码调用关系图1](img/php_img_a.png)  
+  
+  
+### PHP代码案例2
+```
+
+```
+### 转化为dot文件
+```
+```
+### 生成的函数调用关系图  
+![php代码调用关系图2](img/php_img_b.png)  
+
+
+## Ruby代码生成函数调用关系图
+### ruby代码案例1
+```
+
+```
+### 转化为dot文件
+```
+```
+### 生成的函数调用关系图  
+![ruby代码调用关系图1](img/rb_img_a.png)  
+  
+  
+### ruby代码案例2
+```
+
+```
+### 转化为dot文件
+```
+```
+### 生成的函数调用关系图  
+![ruby代码调用关系图2](img/rb_img_b.png)  
+
+
+
+
 ## 安全测试
 使用当前十分流行的开源软件成分分析（SCA）工具OWASP Dependency-Check对由本项目打包生成的JAR文件进行全面的安全漏洞扫描。该工具会通过以下系统化的检测流程：
 1. 依赖库指纹识别
