@@ -69,9 +69,9 @@ java -jar code2flow-in-java.jar 4.js --target-function my_func --upstream-depth=
 ```bash
 java -jar code2flow-in-java.jar --help
 ```
-## 集成测试
-### JavaScript代码生成函数调用关系图
-js代码
+# 集成测试
+## JavaScript代码生成函数调用关系图
+### js代码
 ```
 function func_b() {}
 
@@ -79,7 +79,7 @@ function func_a() {
     func_b();
 }
 ```
-转化为dot文件
+### 转化为dot文件
 ```
 digraph G {
 concentrate=true;
@@ -109,9 +109,10 @@ subgraph cluster_0a0ef935 {
 };
 }
 ```
-生成的函数调用关系图  
-![js代码调用关系图](img/js_img.png)
+### 生成的函数调用关系图  
+![js代码调用关系图1](img/js_img_a.png)
 
+  
 ### Python代码生成函数调用关系图
 python代码
 ```
