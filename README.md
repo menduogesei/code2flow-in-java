@@ -116,4 +116,5 @@ subgraph cluster_0a0ef935 {
 ![1](img/security_test_report.png)
 ![2](img/security_test_report1.png)
 ![3](img/security_test_report2.png)
+
 从Dependency-Check生成的风险分析报告可见，项目中的漏洞主要集中于JSON库，但相关CVE漏洞的攻击方式均为服务端拒绝服务（DoS）。由于本项目是终端本地化应用，不涉及网络服务暴露，所有JSON处理均在封闭环境中运行，不存在被恶意攻击的可能。经安全评估，这些漏洞对本项目无实际影响，用户可以安全使用当前版本。
