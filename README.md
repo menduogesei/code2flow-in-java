@@ -1,5 +1,5 @@
 # code2flow-in-java   
-en [English](README_en.md)
+英文README[English](README_en.md)
 ## 介绍
 &emsp;&emsp;本项目用java语言实现了Code2flow。 
 
