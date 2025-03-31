@@ -109,7 +109,7 @@ subgraph cluster_0a0ef935 {
 };
 }
 ```
-![123](https://myoctocat.com/assets/images/base-octocat.svg)
+![123](/img/electrocat.png)
 
 ## 安全测试
 使用当前十分流行的开源软件成分分析（SCA）工具OWASP Dependency-Check对由本项目打包生成的JAR文件进行全面的安全漏洞扫描。该工具会通过以下系统化的检测流程：
