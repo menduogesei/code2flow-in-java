@@ -61,7 +61,7 @@ java -jar code2flow-in-java.jar 4.js --target-function my_func --upstream-depth=
 java -jar code2flow-in-java.jar --help
 ```
 ## 集成测试
-### js生成调用图
+### JavaScript代码生成函数调用关系图
 js代码
 ```
 function func_b() {}
@@ -70,3 +70,34 @@ function func_a() {
     func_b();
 }
 ```
+转化为dot文件
+```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_be42227a [label="3: func_a()" name="simple_a::func_a" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_b2c75cd6 [label="1: func_b()" name="simple_a::func_b" shape="rect" style="rounded,filled" fillcolor="#6db33f" ];
+node_be42227a -> node_b2c75cd6 [color="#56B4E9" penwidth="2"];
+subgraph cluster_0a0ef935 {
+    node_b2c75cd6 node_be42227a;
+    label="File: simple_a";
+    name="simple_a";
+    style="filled";
+    graph[style=dotted];
+};
+}
+```
+![123](https://myoctocat.com/assets/images/base-octocat.svg)
