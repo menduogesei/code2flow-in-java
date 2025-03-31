@@ -71,7 +71,7 @@ java -jar code2flow-in-java.jar --help
 ```
 # 集成测试
 ## JavaScript代码生成函数调用关系图
-### js代码
+### js代码案例1
 ```
 function func_b() {}
 
@@ -112,8 +112,78 @@ subgraph cluster_0a0ef935 {
 ### 生成的函数调用关系图  
 ![js代码调用关系图1](img/js_img_a.png)
 
+
   
-### Python代码生成函数调用关系图
+### js代码案例2  
+```
+function a() {
+    b();
+}
+
+
+function b() {
+    a("STRC #");
+}
+
+
+class C {
+    d(param) {
+        a("AnotherSTR");
+    }
+}
+
+const c = new C()
+c.d()
+```
+### 转化为dot文件
+```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_4d80af57 [label="0: (global)()" name="simple_b::(global)" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_6f8efa78 [label="14: d()" name="simple_b::C.d" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_5b298643 [label="3: a()" name="simple_b::a" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_47f04d1e [label="8: b()" name="simple_b::b" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_4d80af57 -> node_6f8efa78 [color="#CC79A7" penwidth="2"];
+node_6f8efa78 -> node_5b298643 [color="#000000" penwidth="2"];
+node_5b298643 -> node_47f04d1e [color="#009E73" penwidth="2"];
+node_47f04d1e -> node_5b298643 [color="#D55E00" penwidth="2"];
+subgraph cluster_df41c0e0 {
+    node_5b298643 node_47f04d1e node_4d80af57;
+    label="File: simple_b";
+    name="simple_b";
+    style="filled";
+    graph[style=dotted];
+    subgraph cluster_ac24255b {
+        node_6f8efa78;
+        label="Class: C";
+        name="C";
+        style="filled";
+        graph[style=dotted];
+    };
+};
+}
+```
+### 生成的函数调用关系图  
+![js代码调用关系图2](img/js_img_b.png)
+
+
+
+
+## Python代码生成函数调用关系图
 python代码
 ```
 def func_b():
