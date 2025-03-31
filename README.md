@@ -109,7 +109,50 @@ subgraph cluster_0a0ef935 {
 };
 }
 ```
-![123](/img/electrocat.png)
+生成的函数调用关系图
+![js代码调用关系图](img/js_img.png)
+
+### Python代码生成函数调用关系图
+python代码
+```
+def func_b():
+    pass
+
+def func_a():
+    func_b()
+```
+转化为dot文件
+```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_46f43649 [label="4: func_a()" name="simple_a::func_a" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_b94c9ac3 [label="1: func_b()" name="simple_a::func_b" shape="rect" style="rounded,filled" fillcolor="#6db33f" ];
+node_46f43649 -> node_b94c9ac3 [color="#E69F00" penwidth="2"];
+subgraph cluster_a3022c52 {
+    node_b94c9ac3 node_46f43649;
+    label="File: simple_a";
+    name="simple_a";
+    style="filled";
+    graph[style=dotted];
+};
+}
+```
+生成的函数调用关系图
+![py代码调用关系图](img/js_img.png)
 
 ## 安全测试
 使用当前十分流行的开源软件成分分析（SCA）工具OWASP Dependency-Check对由本项目打包生成的JAR文件进行全面的安全漏洞扫描。该工具会通过以下系统化的检测流程：
