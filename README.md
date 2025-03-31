@@ -63,10 +63,10 @@ java -jar code2flow-in-java.jar --help
 ## 集成测试
 ### js生成调用图
 js代码
-、、、
+```
 function func_b() {}
 
 function func_a() {
     func_b();
 }
-、、、
+```
