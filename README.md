@@ -103,4 +103,4 @@ subgraph cluster_0a0ef935 {
 ![123](https://myoctocat.com/assets/images/base-octocat.svg)
 
 ## 安全测试
-详情见[安全测试报告](http://htmlpreview.github.io/?https://github.com/menduogesei/code2flow-in-java/blob/main/dependency-check-report.html)
+详情见[安全测试报告](dependency-check-report.html)
