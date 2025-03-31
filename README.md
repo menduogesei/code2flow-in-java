@@ -1,4 +1,5 @@
 # code2flow-in-java   
+en [English](README_en.md)
 ## 介绍
 &emsp;&emsp;本项目用java语言实现了Code2flow。 
 
@@ -70,7 +71,7 @@ java -jar code2flow-in-java.jar 4.js --target-function my_func --upstream-depth=
 java -jar code2flow-in-java.jar --help
 ```
 # 单元测试
-&emsp;&emsp;详见单元测试.pdf [单元测试](/单元测试.pdf)
+详见单元测试.pdf [单元测试](/单元测试.pdf)
 # 集成测试
 ## JavaScript代码生成函数调用关系图
 ### js代码案例1
