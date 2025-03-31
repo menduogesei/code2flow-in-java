@@ -179,12 +179,12 @@ subgraph cluster_df41c0e0 {
 ```
 ### 生成的函数调用关系图  
 ![js代码调用关系图2](img/js_img_b.png)
-
-
+  
+  
 
 
 ## Python代码生成函数调用关系图
-python代码
+### python代码案例1
 ```
 def func_b():
     pass
@@ -192,7 +192,7 @@ def func_b():
 def func_a():
     func_b()
 ```
-转化为dot文件
+### 转化为dot文件
 ```
 digraph G {
 concentrate=true;
@@ -222,9 +222,70 @@ subgraph cluster_a3022c52 {
 };
 }
 ```
-生成的函数调用关系图  
-![py代码调用关系图](img/js_img.png)
+### 生成的函数调用关系图  
+![py代码调用关系图1](img/py_img_a.png)
+  
+### python代码案例2
+```
 
+def a():
+    b()
+# comments
+def b():
+    a("""STRC #""")
+class c():
+    def d(a="String"):
+        a("AnotherSTR")
+c.d()
+```
+### 转化为dot文件
+```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_76cca4f3 [label="0: (global)()" name="simple_b::(global)" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_5c57cc6c [label="6: a()" name="simple_b::a" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_abb11264 [label="11: b()" name="simple_b::b" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_4410db85 [label="16: d()" name="simple_b::c.d" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_76cca4f3 -> node_4410db85 [color="#009E73" penwidth="2"];
+node_5c57cc6c -> node_abb11264 [color="#F0E442" penwidth="2"];
+node_abb11264 -> node_5c57cc6c [color="#F0E442" penwidth="2"];
+node_4410db85 -> node_5c57cc6c [color="#0072B2" penwidth="2"];
+subgraph cluster_55bf0f76 {
+    node_5c57cc6c node_abb11264 node_76cca4f3;
+    label="File: simple_b";
+    name="simple_b";
+    style="filled";
+    graph[style=dotted];
+    subgraph cluster_061a6bc6 {
+        node_4410db85;
+        label="Class: c";
+        name="c";
+        style="filled";
+        graph[style=dotted];
+    };
+};
+}
+```
+### 生成的函数调用关系图  
+![py代码调用关系图2](img/py_img_b.png)  
+  
+  
+###将原code2flow的model.py转化为了函数调用关系图  
+![model.py](img/model_py.png)
 ## 安全测试
 使用当前十分流行的开源软件成分分析（SCA）工具OWASP Dependency-Check对由本项目打包生成的JAR文件进行全面的安全漏洞扫描。该工具会通过以下系统化的检测流程：
 1. 依赖库指纹识别
