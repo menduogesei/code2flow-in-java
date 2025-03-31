@@ -227,7 +227,6 @@ subgraph cluster_a3022c52 {
   
 ### python代码案例2
 ```
-
 def a():
     b()
 # comments
@@ -290,10 +289,47 @@ subgraph cluster_55bf0f76 {
 ## PHP代码生成函数调用关系图
 ### PHP代码案例1
 ```
-
+<?php
+function func_b() {
+    echo "hello world";
+}
+function func_a() {
+    func_b();
+}
+func_a();
+?>
 ```
 ### 转化为dot文件
 ```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_17811b20 [label="11: (global)()" name="simple_a::(global)" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_4d037a7a [label="7: func_a()" name="simple_a::func_a" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_4920683e [label="3: func_b()" name="simple_a::func_b" shape="rect" style="rounded,filled" fillcolor="#6db33f" ];
+node_17811b20 -> node_4d037a7a [color="#000000" penwidth="2"];
+node_4d037a7a -> node_4920683e [color="#56B4E9" penwidth="2"];
+subgraph cluster_c960d576 {
+    node_4920683e node_4d037a7a node_17811b20;
+    label="File: simple_a";
+    name="simple_a";
+    style="filled";
+    graph[style=dotted];
+};
+}
 ```
 ### 生成的函数调用关系图  
 ![php代码调用关系图1](img/php_img_a.png)  
@@ -301,10 +337,64 @@ subgraph cluster_55bf0f76 {
   
 ### PHP代码案例2
 ```
-
+<?php
+require __DIR__.'/../vendor/autoload.php';
+function a($param) {
+    b($param);
+}
+function b() {
+    a("STRC #");
+}
+class C {
+    function d($param) {
+        a("AnotherSTR");
+    }
+}
+$c = new C();
+$c->d();
+?>
 ```
 ### 转化为dot文件
 ```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_084e1b8c [label="3: (global)()" name="simple_b::(global)" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_dc20558f [label="16: d()" name="simple_b::C.d" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_e165d5b1 [label="5: a()" name="simple_b::a" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_511665c4 [label="10: b()" name="simple_b::b" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_084e1b8c -> node_dc20558f [color="#F0E442" penwidth="2"];
+node_dc20558f -> node_e165d5b1 [color="#CC79A7" penwidth="2"];
+node_e165d5b1 -> node_511665c4 [color="#E69F00" penwidth="2"];
+node_511665c4 -> node_e165d5b1 [color="#F0E442" penwidth="2"];
+subgraph cluster_58705a56 {
+    node_e165d5b1 node_511665c4 node_084e1b8c;
+    label="File: simple_b";
+    name="simple_b";
+    style="filled";
+    graph[style=dotted];
+    subgraph cluster_af2ec5f6 {
+        node_dc20558f;
+        label="Class: C";
+        name="C";
+        style="filled";
+        graph[style=dotted];
+    };
+};
+}
 ```
 ### 生成的函数调用关系图  
 ![php代码调用关系图2](img/php_img_b.png)  
@@ -313,10 +403,48 @@ subgraph cluster_55bf0f76 {
 ## Ruby代码生成函数调用关系图
 ### ruby代码案例1
 ```
+def func_b(var)
+    puts "hello world"
+end
+
+def func_a()
+    func_b()
+end
+
+func_a()
 
 ```
 ### 转化为dot文件
 ```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_7546bceb [label="(global)()" name="simple_a::(global)" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_c0fac9c5 [label="func_a()" name="simple_a::func_a" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_1dacc838 [label="func_b()" name="simple_a::func_b" shape="rect" style="rounded,filled" fillcolor="#6db33f" ];
+node_7546bceb -> node_c0fac9c5 [color="#009E73" penwidth="2"];
+node_c0fac9c5 -> node_1dacc838 [color="#0072B2" penwidth="2"];
+subgraph cluster_68d4a0e1 {
+    node_1dacc838 node_c0fac9c5 node_7546bceb;
+    label="File: simple_a";
+    name="simple_a";
+    style="filled";
+    graph[style=dotted];
+};
+}
 ```
 ### 生成的函数调用关系图  
 ![ruby代码调用关系图1](img/rb_img_a.png)  
@@ -324,10 +452,67 @@ subgraph cluster_55bf0f76 {
   
 ### ruby代码案例2
 ```
-
+def a()
+    b()
+end
+# comments
+def b()
+    a("""STRC #""")
+end
+class Cls
+    def initialize(val)
+        @val = val
+    end
+    def d(a="String")
+        a("AnotherSTR")
+    end
+end
+c = Cls.new()
+c.d()
 ```
 ### 转化为dot文件
 ```
+digraph G {
+concentrate=true;
+splines="ortho";
+rankdir="LR";
+subgraph legend{
+    rank = min;
+    label = "legend";
+    Legend [shape=none, margin=0, label = <
+        <table cellspacing="0" cellpadding="0" border="1"><tr><td>Code2flow Legend</td></tr><tr><td>
+        <table cellspacing="0">
+        <tr><td>Regular function</td><td width="50px" bgcolor='#cccccc'></td></tr>
+        <tr><td>Trunk function (nothing calls this)</td><td bgcolor='#966F33'></td></tr>
+        <tr><td>Leaf function (this calls nothing else)</td><td bgcolor='#6db33f'></td></tr>
+        <tr><td>Function call</td><td><font color='black'>&#8594;</font></td></tr>
+        </table></td></tr></table>
+        >];
+}node_df0b6deb [label="(global)()" name="simple_b::(global)" shape="rect" style="rounded,filled" fillcolor="#966F33" ];
+node_20a304f1 [label="d()" name="simple_b::Cls.d" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_a41a3668 [label="initialize()" name="simple_b::Cls.initialize" shape="rect" style="rounded,filled" fillcolor="#6db33f" ];
+node_4b7c81a0 [label="a()" name="simple_b::a" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_3625bdca [label="b()" name="simple_b::b" shape="rect" style="rounded,filled" fillcolor="#cccccc" ];
+node_df0b6deb -> node_20a304f1 [color="#009E73" penwidth="2"];
+node_df0b6deb -> node_a41a3668 [color="#009E73" penwidth="2"];
+node_20a304f1 -> node_4b7c81a0 [color="#E69F00" penwidth="2"];
+node_4b7c81a0 -> node_3625bdca [color="#000000" penwidth="2"];
+node_3625bdca -> node_4b7c81a0 [color="#56B4E9" penwidth="2"];
+subgraph cluster_cea84f70 {
+    node_4b7c81a0 node_3625bdca node_df0b6deb;
+    label="File: simple_b";
+    name="simple_b";
+    style="filled";
+    graph[style=dotted];
+    subgraph cluster_ee80f463 {
+        node_a41a3668 node_20a304f1;
+        label="Class: Cls";
+        name="Cls";
+        style="filled";
+        graph[style=dotted];
+    };
+};
+}
 ```
 ### 生成的函数调用关系图  
 ![ruby代码调用关系图2](img/rb_img_b.png)  
@@ -346,8 +531,8 @@ subgraph cluster_55bf0f76 {
 * 许可证合规性分析
 * 漏洞时间线追踪
 
-![1](img/security_test_report.png)
-![2](img/security_test_report1.png)
-![3](img/security_test_report2.png)
+![1](img/security_test_report.png)  
+![2](img/security_test_report1.png)  
+![3](img/security_test_report2.png)  
 
 从Dependency-Check生成的风险分析报告可见，项目中的漏洞主要集中于JSON库，但相关CVE漏洞的攻击方式均为服务端拒绝服务（DoS）。由于本项目是终端本地化应用，不涉及网络服务暴露，所有JSON处理均在封闭环境中运行，不存在被恶意攻击的可能。经安全评估，这些漏洞对本项目无实际影响，用户可以安全使用当前版本。
