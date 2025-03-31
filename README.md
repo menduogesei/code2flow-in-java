@@ -1,6 +1,6 @@
 # code2flow-in-java   
 ## 介绍
-&emsp&emsp本项目用java语言实现了Code2flow。 
+&emsp;&emsp;本项目用java语言实现了Code2flow。 
 
   Code2flow是一款基于python的代码可视化工具，其核心能力在于通过解析抽象语法树（AST）构建函数调用关系图，支持 Python、JavaScript、Ruby、PHP 等动态语言，通过解析代码的抽象语法树（AST）自动生成流程图或调用关系图，直观展示函数调用、条件分支（如 if/else）、循环结构（如 for/while）等逻辑。它可分析单个文件或整个项目目录，递归识别跨文件的函数调用链，并支持导出为 PNG、SVG、PDF 等格式。该工具提供命令行接口和编程 API，允许自定义流程图样式（如节点颜色、布局方向）和过滤机制（如排除测试文件或冗余函数），适用于代码审查、教学演示、项目架构分析等场景。
 
